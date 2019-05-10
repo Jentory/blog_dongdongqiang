@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改博客</title>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container page-header">
+    <h1>新增文章</h1>
+</div>
+<div class="container page-body">
+    <div>
+        <form action="{% url 'blog:editaction' %}" method="post">
+            {% csrf_token %}
+                <input type="hidden" name="article_id" value="{{ article.id | default:'0'}}"/>
+                <label>文章标题
+                    <input type="text" name="title" value="{{ article.title }}"/>
+                </label>
+                <br/>
+                <label>文章简介
+                    <input type="text" name="content" value="{{ article.brief_content }}"/>
+                </label>
+                <br/>
+                <label>文章内容
+                    <input type="text" name="content" value="{{ article.content }}"/>
+                </label>
+                <br/>
+
+            <input type="submit" value="提交"/>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

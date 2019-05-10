@@ -24,6 +24,7 @@ def article_content(request):
 
 def get_index_page(request):
     page = request.GET.get('page')
+    print('page: ', page)
     if page:
         page = int(page)
     else:
@@ -77,4 +78,35 @@ def get_detail_page(request, article_id):
     return render(request, 'blog/detail.html', {'current_article': current_article,
                                                 'previous_article': previous_article,
                                                 'next_article': next_article})
+
+
+def edit_article(request, article_id):
+    if str(article_id) == '0':
+        return render(request, 'blog/edit.html')
+    article = Article.objects.get(pk=article_id)
+    return render(request, 'blog/edit.html', {'article': article})
+
+
+def edit_action(request):
+    title = request.POST.get('title', 'TITLE')
+    brief_content = request.POST.get('brief_content', 'BRIEF_CONTENT')
+    content = request.POST.get('content', 'CONTENT')
+
+    article_id = request.POST.get('article_id', '0')
+    if article_id == '0':
+        Article.objects.create(title=title, brief_content=brief_content, content=content)
+        article = Article.objects.all()[0]
+        return render(request, 'blog/detail.html', {'current_article': article,
+                                                    'previous_article': article,
+                                                    'next_article': article})
+
+    article = Article.objects.get(pk=article_id)
+    article.title = title
+    article.brief_content = brief_content
+    article.content = content
+    article.save()
+    article = Article.objects.get(pk=article_id)
+    return render(request, 'blog/detail.html', {'current_article': article,
+                                                'previous_article': article,
+                                                'next_article': article})
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>入门Django Web框架</title>
+    <title>入门Django Web框架 博客的详情</title>
     <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
@@ -15,15 +15,18 @@
 </div>
 <div class="container page-body">
     <div>
+        <p>{{ current_article.brief_content }}</p>
         <p>{{ current_article.content }}</p>
+
     </div>
 </div>
 
 <div>
     <nav aria-label="...">
       <ul class="pager">
-        <li><a href="/blog/detail/{{ previous_article.article_id }}">上一篇：{{ previous_article.title }}</a></li>
-        <li><a href="/blog/detail/{{ next_article.article_id }}">下一篇：{{ next_article.title }}</a></li>
+          <li><a href = "{% url 'blog:edit' current_article.article_id %}">修改文章</a></li>
+        <li><a href=" {% url 'blog:detail' previous_article.article_id %}">上一篇：{{ previous_article.title }}</a></li>
+        <li><a href="{% url 'blog:detail' next_article.article_id%}">下一篇：{{ next_article.title }}</a></li>
       </ul>
     </nav>
 </div>
